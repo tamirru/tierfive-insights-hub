@@ -1,12 +1,48 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { useEffect } from "react";
+import NavBar from "@/components/NavBar";
+import HeroSection from "@/components/HeroSection";
+import FeatureSection from "@/components/FeatureSection";
+import HowItWorks from "@/components/HowItWorks";
+import AboutSection from "@/components/AboutSection";
+import Footer from "@/components/Footer";
 
 const Index = () => {
+  // Smooth scrolling for anchor links
+  useEffect(() => {
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const anchor = target.closest('a');
+      
+      if (!anchor) return;
+      const href = anchor.getAttribute('href');
+      
+      if (href && href.startsWith('#') && href.length > 1) {
+        e.preventDefault();
+        const targetElement = document.querySelector(href);
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.getBoundingClientRect().top + window.pageYOffset - 100,
+            behavior: 'smooth'
+          });
+        }
+      }
+    };
+
+    document.addEventListener('click', handleAnchorClick);
+    return () => document.removeEventListener('click', handleAnchorClick);
+  }, []);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-tier-light">
+      <NavBar />
+      <main>
+        <HeroSection />
+        <FeatureSection />
+        <HowItWorks />
+        <AboutSection />
+      </main>
+      <Footer />
     </div>
   );
 };
