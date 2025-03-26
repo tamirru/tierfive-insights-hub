@@ -71,7 +71,7 @@ const HeroSection = () => {
           <p 
             className="text-lg md:text-xl text-tier-slate/80 max-w-3xl mx-auto mb-10 opacity-0 animate-fade-in stagger-2 text-balance"
           >
-            We're building a platform that captures how teams actually work to close the gap for AI.
+            Auto-document your team's workflows. Train your AI assistant just by working.
           </p>
 
           {/* Subscription Form */}
