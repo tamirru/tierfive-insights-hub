@@ -1,10 +1,8 @@
 
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
 
 const NavBar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,59 +30,9 @@ const NavBar = () => {
             Tier<span className="text-tier-blue">.5</span>
           </a>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-10">
-            <nav className="flex items-center space-x-10">
-              <a href="#features" className="text-tier-slate/80 hover:text-tier-blue transition-colors">
-                Features
-              </a>
-              <a href="#how-it-works" className="text-tier-slate/80 hover:text-tier-blue transition-colors">
-                How It Works
-              </a>
-              <a href="#about" className="text-tier-slate/80 hover:text-tier-blue transition-colors">
-                About
-              </a>
-            </nav>
-          </div>
-
-          {/* Mobile Menu Toggle */}
-          <button
-            className="md:hidden text-tier-slate"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle Menu"
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          {/* Right side - intentionally empty for minimalist design */}
+          <div></div>
         </div>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden glass mt-4 py-6 px-4 rounded-lg animate-fade-in">
-            <nav className="flex flex-col space-y-4">
-              <a 
-                href="#features" 
-                className="text-tier-slate/80 hover:text-tier-blue transition-colors py-2 px-3"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Features
-              </a>
-              <a 
-                href="#how-it-works" 
-                className="text-tier-slate/80 hover:text-tier-blue transition-colors py-2 px-3"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                How It Works
-              </a>
-              <a 
-                href="#about" 
-                className="text-tier-slate/80 hover:text-tier-blue transition-colors py-2 px-3"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                About
-              </a>
-            </nav>
-          </div>
-        )}
       </div>
     </header>
   );

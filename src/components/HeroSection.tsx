@@ -1,70 +1,118 @@
 
-import { ArrowRight, Database, Workflow, Brain } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowRight, Mail, Clock } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
 
 const HeroSection = () => {
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!email || !email.includes('@')) {
+      toast({
+        title: "Invalid email",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    setIsSubmitting(true);
+    
+    try {
+      // In a real implementation, you'd send this to a backend
+      console.log(`Subscribing email: ${email} to updates`);
+      
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      toast({
+        title: "Subscription successful!",
+        description: "Thank you for subscribing to our updates.",
+      });
+      
+      setEmail('');
+    } catch (error) {
+      toast({
+        title: "Subscription failed",
+        description: "There was an error subscribing to updates. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <section className="pt-32 pb-20 md:pt-40 md:pb-28 px-6 relative overflow-hidden">
+    <section className="pt-32 pb-20 md:pt-40 md:pb-28 px-6 relative overflow-hidden min-h-screen flex items-center">
       <div className="container mx-auto relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Pill Badge */}
+          {/* Coming Soon Badge */}
           <div 
-            className="inline-block px-4 py-1.5 bg-tier-blue/10 text-tier-blue rounded-full text-sm font-medium mb-6 opacity-0 animate-fade-in"
+            className="inline-flex items-center gap-2 px-4 py-1.5 bg-tier-blue/10 text-tier-blue rounded-full text-sm font-medium mb-6 opacity-0 animate-fade-in"
           >
-            Introducing Workflow Intelligence
+            <Clock size={16} />
+            Coming Soon
           </div>
           
           {/* Headline */}
           <h1 
             className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight text-tier-slate mb-6 opacity-0 animate-fade-in stagger-1 text-balance"
           >
-            Capture How Teams <span className="text-tier-blue">Actually Work</span>
+            Tier<span className="text-tier-blue">.5</span> is coming
           </h1>
           
           {/* Subheadline */}
           <p 
             className="text-lg md:text-xl text-tier-slate/80 max-w-3xl mx-auto mb-10 opacity-0 animate-fade-in stagger-2 text-balance"
           >
-            Not just what's written in documentation, but how work really happens. We transform tribal knowledge into structured, actionable data.
+            We're building a platform that captures how teams actually work. Be the first to know when we launch.
           </p>
 
-          {/* CTA */}
-          <div className="opacity-0 animate-fade-in stagger-3">
-            <a 
-              href="#features" 
-              className="inline-flex items-center gap-2 bg-tier-blue hover:bg-tier-blue/90 text-white px-8 py-4 rounded-lg font-medium transition-all duration-300 shadow-lg hover:shadow-tier-blue/20 group"
-            >
-              Learn More
-              <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
-            </a>
+          {/* Subscription Form */}
+          <div className="opacity-0 animate-fade-in stagger-3 max-w-md mx-auto">
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
+              <Input
+                type="email"
+                placeholder="Enter your email"
+                className="flex-grow"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <Button 
+                type="submit" 
+                className="bg-tier-blue hover:bg-tier-blue/90 text-white transition-all duration-300"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  "Subscribing..."
+                ) : (
+                  <>
+                    Subscribe
+                    <ArrowRight size={16} className="ml-1" />
+                  </>
+                )}
+              </Button>
+            </form>
+            <p className="text-sm text-tier-slate/60 mt-3">
+              We'll notify you when we launch. No spam, promise!
+            </p>
           </div>
         </div>
 
-        {/* Floating Icons */}
-        <div className="hidden md:block absolute top-10 left-10 animate-float opacity-0 animate-fade-in stagger-4">
-          <div className="p-4 bg-white/80 rounded-xl shadow-xl backdrop-blur-md">
-            <Workflow size={32} className="text-tier-blue" />
-          </div>
-        </div>
-        
-        <div className="hidden md:block absolute bottom-20 left-20 animate-float animation-delay-1000 opacity-0 animate-fade-in stagger-4">
-          <div className="p-4 bg-white/80 rounded-xl shadow-xl backdrop-blur-md">
-            <Database size={32} className="text-tier-blue" />
-          </div>
-        </div>
-        
-        <div className="hidden md:block absolute top-20 right-20 animate-float animation-delay-2000 opacity-0 animate-fade-in stagger-5">
-          <div className="p-4 bg-white/80 rounded-xl shadow-xl backdrop-blur-md">
-            <Brain size={32} className="text-tier-blue" />
-          </div>
-        </div>
+        {/* Background Blur Elements */}
+        <div className="absolute top-40 -left-20 w-80 h-80 bg-tier-blue/10 rounded-full blur-3xl opacity-50" />
+        <div className="absolute bottom-20 -right-20 w-80 h-80 bg-tier-blue/10 rounded-full blur-3xl opacity-50" />
       </div>
       
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-tier-blue/5 to-transparent pointer-events-none" />
-      
-      {/* Background Blur Elements */}
-      <div className="absolute top-40 -left-20 w-80 h-80 bg-tier-blue/10 rounded-full blur-3xl opacity-50" />
-      <div className="absolute bottom-20 -right-20 w-80 h-80 bg-tier-blue/10 rounded-full blur-3xl opacity-50" />
     </section>
   );
 };

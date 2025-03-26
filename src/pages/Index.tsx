@@ -2,9 +2,6 @@
 import { useEffect } from "react";
 import NavBar from "@/components/NavBar";
 import HeroSection from "@/components/HeroSection";
-import FeatureSection from "@/components/FeatureSection";
-import HowItWorks from "@/components/HowItWorks";
-import AboutSection from "@/components/AboutSection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -38,9 +35,6 @@ const Index = () => {
       <NavBar />
       <main>
         <HeroSection />
-        <FeatureSection />
-        <HowItWorks />
-        <AboutSection />
       </main>
       <Footer />
     </div>
